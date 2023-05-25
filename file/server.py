@@ -58,9 +58,6 @@ def terrain_inter_col(M, n, col):
 
     return M
 
-def handle_client(client_socket):
-    pass
-
 def printMatrix(M, n):
     for i in range(n):
         for j in range(n):
@@ -76,9 +73,11 @@ print ("Socket successfully created")
 client_num = 2
 
 port = 5003
-server_socket.bind(('', port))        
+host = '127.0.0.1'
+
+server_socket.bind((host, port))        
 print("socket binded to %s" %(port))
- 
+
 # put the socket into listening mode
 print ("socket is listening")           
 server_socket.listen(5)    
@@ -103,7 +102,7 @@ server_socket.listen(5)
 
 
 
-n = 21
+n = 11
 M = createMatrix(n)
 # printMatrix(M, n)
 col = 0
@@ -151,16 +150,18 @@ while counter < client_num:
     client_socket, addr = server_socket.accept()    
     print('Got connection from', addr)
 
+
     # handle_client(client_socket)
     temp = M[start_list[counter]:start_list[counter+1]]
     data=pickle.dumps(temp)
     client_socket.send(data)
 
+    ack = client_socket.recv(4096)
+    print(ack.decode())
+
     counter += 1
-
-    # message = client_socket.recv(1024).decode()
-    # print(message)
-
+    
     client_socket.close()
+
 print("You have reached the maximum number of clients.")
 server_socket.close()

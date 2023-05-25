@@ -38,27 +38,29 @@ client_socket = socket.socket()
  
 # Define the port on which you want to connect
 port = 5003
+host = '127.0.0.1'
  
 # connect to the server on local computer
-client_socket.connect(('127.0.0.1', port))
+client_socket.connect((host, port))
 
-data = []
+
+
+data = bytearray()
 while True:
     packet = client_socket.recv(4096)
-    if not packet: break
-    data.append(packet)
+    data.extend(packet)
+    if len(packet) < 4096: break
 
-M = pickle.loads(b"".join(data))
+M = pickle.loads(data)
 
 message = "ack"
 client_socket.send(message.encode())
 print(message)
 
 # fill remaining rows (inner box)
-for row in range(1, len(M)):
-    if row % 10 == 0:
-        continue
-    terrain_inter_row(M, len(M), row)
+for row in range(len(M)):
+    terrain_inter_row(M, 11, row)
+
 
 
 print()
