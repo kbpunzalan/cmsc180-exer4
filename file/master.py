@@ -65,15 +65,10 @@ def printMatrix(M, n):
 
         print()
 
-def main():
+def main(n, client_num, host, port):
 
     server_socket = socket.socket()        
     print ("Socket successfully created")
-
-    client_num = 2
-
-    port = 8002
-    host = '10.0.4.11'
 
     server_socket.bind((host, port))        
     print("socket binded to %s" %(port))
@@ -83,7 +78,6 @@ def main():
     server_socket.listen(5)    
 
 
-    n = 11
     M = createMatrix(n)
     # printMatrix(M, n)
     col = 0
@@ -111,12 +105,12 @@ def main():
     print(start_list)
 
     for index in range(len(start_list)-1):
-        print(start_list[index], start_list[index+1])
+        # print(start_list[index], start_list[index+1])
         temp = M[start_list[index]:start_list[index+1]]
         
         
-        for i in temp:
-            print(i)
+        # for i in temp:
+        #     print(i)
 
 
     # a forever loop until we interrupt it or

@@ -30,19 +30,16 @@ def terrain_inter_row(M, n, row):
                 pass
 
 
-def main():
+def main(n, host, port):
     # os.system('clear')       
     
     # Create a socket object
     client_socket = socket.socket()        
     
     # Define the port on which you want to connect
-    port = 8002
-    host = '127.0.0.1'
-    
+
     # connect to the server on local computer
     client_socket.connect((host, port))
-
 
 
     data = bytearray()
@@ -59,7 +56,7 @@ def main():
 
     # fill remaining rows (inner box)
     for row in range(len(M)):
-        terrain_inter_row(M, 11, row)
+        terrain_inter_row(M, n, row)
 
 
 
