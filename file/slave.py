@@ -50,21 +50,19 @@ def main(n, host, port):
 
     M = pickle.loads(data)
 
-    message = "ack"
-    client_socket.send(message.encode())
-    print(message)
-
     # fill remaining rows (inner box)
     for row in range(len(M)):
         terrain_inter_row(M, n, row)
 
+    message = "ack"
+    client_socket.send(message.encode())
+    print(message)
+    print("Done Interpolation")
 
-
-    print()
-    for i in M:
-        print(i)
-    # printMatrix(M, 11)
-    print()
+    # print()
+    # for i in M:
+    #     print(i)
+    # print()
 
 
     # close the connection
