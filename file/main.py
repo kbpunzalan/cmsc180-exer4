@@ -1,13 +1,16 @@
-# n = int(input("Enter n: "))
-s = int(input("Enter s: "))
-# p = int(input("Enter n: "))
+
+
 import master
 import slave
 
 
+import os
+os.system('cls')
+
+s = int(input("Enter s: "))
 if __name__ == "__main__":
     with open("config.txt") as f:
-        n = int(f.readline())
+        n = int(f.readline()) + 1
         t_minus_1 = int(f.readline())
         port = int(f.readline())
         host = f.readline()

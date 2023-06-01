@@ -2,7 +2,7 @@ import socket
 import pickle
 import os
 import random
-import threading
+import time
 
 os.system('clear')
 
@@ -111,15 +111,15 @@ def main(n, client_num, host, port):
         
         # for i in temp:
         #     print(i)
+        # print()
 
 
-    # a forever loop until we interrupt it or
-    # an error occurs
+    start_time = time.time()  
+
     counter = 0
     while counter < client_num:
         client_socket, addr = server_socket.accept()    
         print('Got connection from', addr)
-
 
         # handle_client(client_socket)
         temp = M[start_list[counter]:start_list[counter+1]]
@@ -129,9 +129,18 @@ def main(n, client_num, host, port):
         ack = client_socket.recv(4096)
         print(ack.decode())
 
-        counter += 1
         
         client_socket.close()
+        counter += 1
+
+    end_time = time.time()  # Record the end time
+    elapsed_time = end_time - start_time  # Calculate the elapsed time
+
+    print("Elapsed time:", elapsed_time, "seconds")
+    
 
     print("You have reached the maximum number of clients.")
     server_socket.close()
+    
+
+    print("Hi")
