@@ -42,21 +42,24 @@ def main(n, host, port):
     client_socket.connect((host, port))
 
 
+    data_size = int.from_bytes(client_socket.recv(4), 'big')
+
     data = bytearray()
-    while True:
+    while len(data) < data_size:
         packet = client_socket.recv(4096)
         data.extend(packet)
-        if len(packet) < 4096: break
 
     M = pickle.loads(data)
+
+    message = "ack"
+    client_socket.send(message.encode())
+    print(message)
 
     # fill remaining rows (inner box)
     for row in range(len(M)):
         terrain_inter_row(M, n, row)
 
-    message = "ack"
-    client_socket.send(message.encode())
-    print(message)
+
     print("Done Interpolation")
 
     # print()
