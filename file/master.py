@@ -116,18 +116,25 @@ def main(n, client_num, host, port):
 
     start_time = time.time()  
 
+
     counter = 0
     while counter < client_num:
         client_socket, addr = server_socket.accept()    
         print('Got connection from', addr)
-
-        # handle_client(client_socket)
+        
         temp = M[start_list[counter]:start_list[counter+1]]
         data=pickle.dumps(temp)
-        client_socket.send(data)
+        client_socket.sendall(len(data).to_bytes(4, 'big'))
+        client_socket.sendall(data)
 
         ack = client_socket.recv(4096)
         print(ack.decode())
+
+
+        data_size = int.from_bytes(client_socket.recv(4),'big')
+        data = bytearray()
+    
+
 
         
         client_socket.close()
@@ -140,7 +147,3 @@ def main(n, client_num, host, port):
     
 
     print("You have reached the maximum number of clients.")
-    server_socket.close()
-    
-
-    print("Hi")
